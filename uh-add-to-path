@@ -3,9 +3,9 @@ set -e
 
 if [ "$1" = "help" ]
   then
-    echo "Desc. : Adds the specified path to the PATH variable permanently"
-    echo "Usage : ./add-to-path (path)"
-    echo "Eg.   : ./add-to-path /path/to/be/added"
+    echo "Desc. : adds the specified path to the PATH variable permanently"
+    echo "Usage : ./uh-add-to-path (path)"
+    echo "Eg.   : ./uh-add-to-path /path/to/be/added"
     exit 0;
 fi
 

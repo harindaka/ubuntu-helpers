@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+if [ "$1" = "help" ]
+  then
+    echo "Desc. : connects an already configured wifi connection"
+    echo "Usage : ./uh-saved-wifi-connect (connection name)"
+    echo "Eg.   : ./uh-saved-wifi-connect MyWifi"
+    exit 0;
+fi
+
+if [ -z "$1" ]; then
+  echo "Connection name not specified"
+  exit 0;
+fi
+
+nmcli c up $1
