@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+if [ "$1" = "help" ]
+  then
+    echo "Desc. : grants read and write permissions for all users for the specified directory"
+    echo "Usage : sudo ./uh-fs-perms-dir-allow-all (path)"
+    echo "Eg.   : sudo ./uh-fs-perms-dir-allow-all /path/to/directory"
+    exit 0;
+fi
+
+if [ -z "$1" ]; then
+  echo "Directory path not specified"
+  exit 0;
+fi
+
+chmod -R 0777 $1
