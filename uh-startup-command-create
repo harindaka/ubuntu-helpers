@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e
+
+echo "Enter the name of the service file which will contain the startup command below (no spaces):"
+read SERVICE_FILE
+SERVICE_FILE=$SERVICE_FILE.service
+
+echo
+echo "Enter the description of the startup command below:"
+read SERVICE_DESC
+
+echo
+echo "Enter command to be executed on startup below:"
+read COMMAND
+
+SERVICE_SCRIPT=""
+read -d '' SERVICE_SCRIPT << EOF || true
+[Unit]
+Description=$SERVICE_DESC
+
+[Service]
+Type=oneshot
+ExecStart=$COMMAND
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+SERVICE_DIR="/etc/systemd/system/"
+
+echo
+echo "The below mentioned systemd service entry will be created at $SERVICE_DIR$SERVICE_FILE"
+echo
+echo "$SERVICE_SCRIPT"
+
+echo
+
+echo "Please enter your choice:"
+select yn in "Proceed" "Cancel"; do
+    case $yn in
+        Proceed ) echo "$SERVICE_SCRIPT" >| $SERVICE_DIR$SERVICE_FILE; echo; echo "Done. Systemd service entry created at $SERVICE_DIR$SERVICE_FILE"; break;;
+        Cancel ) echo; echo "Script execution cancelled"; break;;
+    esac
+done
