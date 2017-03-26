@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-if [ "$1" = "help" ]
+if [ "$1" = "--help" ]
   then
     echo "Desc. : disconnects an already configured wifi connection"
     echo "Usage : ./uh-saved-wifi-disconnect (connection name)"

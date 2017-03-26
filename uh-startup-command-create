@@ -2,6 +2,14 @@
 
 set -e
 
+if [ "$1" = "--help" ]
+  then
+    echo "Desc. : creates a systemd service which runs a command or shell script once upons startup"
+    echo "Usage : sudo ./uh-startup-command-create"
+    echo "Eg.   : sudo ./uh-startup-command-create"
+    exit 0;
+fi
+
 echo "Enter the name of the service file which will contain the startup command below (no spaces):"
 read SERVICE_FILE
 SERVICE_FILE=$SERVICE_FILE.service
@@ -40,7 +48,15 @@ echo
 echo "Please enter your choice:"
 select yn in "Proceed" "Cancel"; do
     case $yn in
-        Proceed ) echo "$SERVICE_SCRIPT" >| $SERVICE_DIR$SERVICE_FILE; echo; echo "Done. Systemd service entry created at $SERVICE_DIR$SERVICE_FILE"; break;;
-        Cancel ) echo; echo "Script execution cancelled"; break;;
+        Proceed ) 
+            echo "$SERVICE_SCRIPT" >| $SERVICE_DIR$SERVICE_FILE 
+            systemctl enable $SERVICE_DIR$SERVICE_FILE
+            echo 
+            echo "Done. Systemd service entry created at $SERVICE_DIR$SERVICE_FILE"
+            break;;
+        Cancel ) 
+            echo
+            echo "Script execution cancelled"
+            break;;
     esac
 done

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-if [ "$1" = "help" ]
+if [ "$1" = "--help" ]
   then
     echo "Desc. : adds the specified path to the PATH variable permanently"
     echo "Usage : sudo ./uh-add-to-path (path)"

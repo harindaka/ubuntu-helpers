@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-if [ "$1" = "help" ]
+if [ "$1" = "--help" ]
   then
     echo "Desc. : grants read and write permissions for all users for the specified directory"
     echo "Usage : sudo ./uh-fs-perms-dir-allow-all (path)"
