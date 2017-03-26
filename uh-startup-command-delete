@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -e
+
+if [ "$1" = "--help" ]
+  then
+    echo "Desc. : removes a startup command registered as a systemd service via the uh-startup-command-create script"
+    echo "Usage : sudo ./uh-startup-command-delete (name of the service without the .service extension)"
+    echo "Eg.   : sudo ./uh-startup-command-delete service-name"
+    exit 0;
+fi
+
+
+if [ -z "$1" ]; then
+  echo "Service name not specified"
+  exit 0;
+fi
+
+SERVICE_DIR="/etc/systemd/system/"
+SERVICE_FILE_NAME="$1.service"
+SERVICE_FILE="$SERVICE_DIR$SERVICE_FILE_NAME"
+
+systemctl stop $SERVICE_FILE_NAME || true
+systemctl disable $SERVICE_FILE_NAME || true
+
+if [ -f "$SERVICE_FILE" ]; then
+  rm $SERVICE_FILE
+fi
+
+SYMLINK_FILE="$SERVICE_DIRmulti-user.target.wants/$SERVICE_FILE_NAME"
+if [ -f "$SYMLINK_FILE" ]; then
+  rm $SYMLINK_FILE
+fi
+
+systemctl daemon-reload
+systemctl reset-failed
+
+echo "Done. Service $1 was deleted successfully" 
